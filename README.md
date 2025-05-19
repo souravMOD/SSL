@@ -1,3 +1,3 @@
-First pretrain using SSL, and later fine tune with ultraltics library
+First pretrain using SSL on lightly AI , and later fine-tune with Ultralytics library
 
 ##
