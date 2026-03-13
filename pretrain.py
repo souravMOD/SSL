@@ -1,18 +1,17 @@
+import os
+
 import lightly_train
 from ultralytics import settings
 
-
-
-
 my_transform_args = {
     "random_resize": {
-        "min_scale": 0.1
+        "min_scale": 0.1,
     },
     "image_size": (640, 640),
     "color_jitter": None,
 }
 
-'''DINO Pretraining with LightlyTrain'''
+"""DINO Pretraining with LightlyTrain"""
 # "global_view_1": {                     # modifications for second global view (cannot be disabled)
 #     "gaussian_blur": {                 # can be disabled by setting to None
 #         "prob": float,                 
@@ -38,15 +37,18 @@ my_transform_args = {
 #     }
 # }
 
-data_path = r"D:\DATASET\self_supervised_pretrain\GenV2\train\images"
+data_path = os.environ.get("SSL_DATA_PATH", "/data")
+output_dir = os.environ.get("SSL_OUTPUT_DIR", "out/my_experiment")
+epochs = int(os.environ.get("SSL_EPOCHS", "100"))
+batch_size = int(os.environ.get("SSL_BATCH_SIZE", "4"))
+
 if __name__ == "__main__":
-    # Pretrain with LightlyTrain.
     lightly_train.train(
-        out="out/my_experiment",            # Output directory.
-        model="ultralytics/yolo11l.yaml",   # Pass the YOLO model.
-        data=data_path, 
-        method="distillation",                   # Path to a directory with training images.
-        epochs=100,   
-        transform_args= my_transform_args,                      # Adjust epochs for faster training.
-        batch_size=4,                      # Adjust batch size based on hardware.
+        out=output_dir,
+        model="ultralytics/yolo11l.yaml",
+        data=data_path,
+        method="distillation",
+        epochs=epochs,
+        transform_args=my_transform_args,
+        batch_size=batch_size,
     )

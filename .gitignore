@@ -119,8 +119,15 @@ dmypy.json
 *.sass.map
 *.scss.map
 
-# All text files
+# Docker
+docker-compose.override.yml
+
+# Training outputs
+out/
+
+# All text files (except requirements.txt)
 *.txt
+!requirements.txt
 
 # All image files
 *.jpg
